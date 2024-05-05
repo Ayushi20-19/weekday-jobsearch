@@ -4,6 +4,7 @@ import { getCompanyDataService } from "../services/company";
 const initialState = {
   status: null,
   companyData: [],
+  totalCount: 0,
 };
 const companiesDataSlice = createSlice({
   name: "company",
@@ -12,16 +13,14 @@ const companiesDataSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getCompanyDataService.pending, (state) => {
-        console.log("pending");
         state.status = "pending";
       })
-      .addCase(getCompanyDataService.fulfilled, (state, action) => {
-        console.log("fulfilled payload:", action.payload);
+      .addCase(getCompanyDataService.fulfilled, (state, { payload }) => {
         state.status = "resolved";
-        state.companyData = action.payload.jdList;
+        state.companyData = [...state.companyData, ...payload.jdList];
+        state.totalCount = payload.totalCount;
       })
       .addCase(getCompanyDataService.rejected, (state, action) => {
-        console.log("rejected", action.error);
         state.status = "rejected";
         state.error = action.error.message;
       });
