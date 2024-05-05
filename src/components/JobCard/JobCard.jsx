@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./JobCard.module.css";
+import { formatExperience, formatSalary } from "../../utils/utils";
 
 const JobCard = ({ data }) => {
   const {
@@ -14,42 +15,16 @@ const JobCard = ({ data }) => {
     jobDetailsFromCompany,
   } = data;
 
-  // Function to format salary range
-  const formatSalary = () => {
-    if (minJdSalary && maxJdSalary) {
-      return `₹${minJdSalary} - ₹${maxJdSalary} LPA`;
-    } else if (minJdSalary) {
-      return `Above ₹${minJdSalary} LPA`;
-    } else if (maxJdSalary) {
-      return `Upto ₹${maxJdSalary} LPA`;
-    } else {
-      return "Salary not provided";
-    }
-  };
-
-  // Function to format experience range
-  const formatExperience = () => {
-    if (minExp && maxExp) {
-      return `${minExp} - ${maxExp} years`;
-    } else if (minExp) {
-      return `Minimum ${minExp} years`;
-    } else if (maxExp) {
-      return `Upto ${maxExp} years`;
-    } else {
-      return "Experience not provided";
-    }
-  };
-
   return (
     <>
       <div className={styles.cardMainWrapper}>
-        <div className={styles.cardContentWrapper}>
-          <div className={styles.postInfo}>
+        <article className={styles.cardContentWrapper}>
+          <section className={styles.postInfo}>
             <div className={styles.postDate}>
               <p>⏳ Posted 3 days ago</p>
             </div>
-          </div>
-          <div className={styles.cardContent}>
+          </section>
+          <section className={styles.cardContent}>
             <div className={styles.companyInfo}>
               <img src={logoUrl} alt="logo" />
               <div>
@@ -61,30 +36,30 @@ const JobCard = ({ data }) => {
               </div>
             </div>
             <p className={styles.cardSalary}>
-              Estimated Salary: {formatSalary()}
+              Estimated Salary: {formatSalary(minJdSalary, maxJdSalary)}
             </p>
-            <div className={styles.aboutCompany}>
+            <section className={styles.aboutCompany}>
               <p>About Company: </p>
               <p>About us </p>
               <div>{jobDetailsFromCompany}</div>
-            </div>
+            </section>
             <div className={styles.viewJob}>
               <span>View Job</span>
             </div>
             <div className={styles.minExperience}>
               <h3>Minimum Experience</h3>
-              <h2>{formatExperience()}</h2>
+              <h2>{formatExperience(minExp, maxExp)}</h2>
             </div>
-          </div>
-          <div className={styles.statusContainer}>
+          </section>
+          <section className={styles.statusContainer}>
             <div className={styles.statusButtonContainer}>
               <button className={styles.customBtn}>⚡ Easy Apply</button>
             </div>
             <div className={styles.statusButtonContainer}>
               <button className={styles.customBtn}>Unlock referral asks</button>
             </div>
-          </div>
-        </div>
+          </section>
+        </article>
       </div>
     </>
   );
