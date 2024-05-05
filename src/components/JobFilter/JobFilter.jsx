@@ -2,19 +2,26 @@ import React from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedFilters } from "../../redux/slices/companiesDataSlice";
 
-const JobFilter = ({ filterData, selectedValues, setSelectedValues }) => {
+const JobFilter = ({ filterData }) => {
+  const dispatch = useDispatch();
+  const { selectedFilters } = useSelector((state) => state.company);
+
   const handleChange = (type, value) => {
     let newSelectedValues = [];
+
     if (Array.isArray(value) && value.length > 0) {
       newSelectedValues = [
-        ...selectedValues.filter((val) => val.type !== type),
+        ...selectedFilters.filter((val) => val.type !== type),
         { type, value },
       ];
     } else {
-      newSelectedValues = selectedValues.filter((val) => val.type !== type);
+      newSelectedValues = selectedFilters.filter((val) => val.type !== type);
     }
-    setSelectedValues(newSelectedValues);
+
+    dispatch(setSelectedFilters(newSelectedValues));
   };
 
   return (
@@ -37,11 +44,12 @@ const JobFilter = ({ filterData, selectedValues, setSelectedValues }) => {
     >
       {filterData.map((filter, index) => (
         <Autocomplete
+          style={{ minWidth: "200px" }}
           key={index}
           multiple
           id={`filter-${index}`}
           options={filter.options.filter((option) => {
-            const selectedOption = selectedValues.find(
+            const selectedOption = selectedFilters?.find(
               (val) => val.type === filter.type
             );
             return (

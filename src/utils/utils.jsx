@@ -32,3 +32,31 @@ export const formatExperience = (minExp,maxExp) => {
   }
   return "Experience not provided";
 };
+
+
+// function to filter Companies data
+export const filterCompanyData = (selectedFilters, companyData) => {  
+  return companyData.filter(company => {
+      return selectedFilters?.every(({ type, value }) => {
+        
+          switch (type) {
+              case "companyName":
+                  return value.includes(company.companyName);
+              case "location":
+                  return value.includes(company.location);
+              case "role":
+                  return value.includes(company.jobRole);
+              case "techStack":
+                  return value.some(stack => company.techStack.includes(stack));
+              case "minExp":
+                  return company.minExp >= Math.min(...value);
+              case "minJdSalary":
+                  return company.minJdSalary >= Math.min(...value);
+              case "remote":
+                  return value.includes(company.locationType); 
+              default:
+                  return true;
+          }
+      });
+  });
+};

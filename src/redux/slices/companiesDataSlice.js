@@ -1,15 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getCompanyDataService } from "../services/company";
+import { filterCompanyData } from "../../utils/utils";
 
 const initialState = {
   status: null,
   companyData: [],
   totalCount: 0,
+  selectedFilters: [],
+  filteredCompanies: [],
 };
 const companiesDataSlice = createSlice({
   name: "company",
   initialState,
-  reducers: {},
+  reducers: {
+    setSelectedFilters: (state, action) => {
+      state.selectedFilters = action.payload || [];
+    },
+    setFilteredCompanies: (state) => {
+      state.filteredCompanies = filterCompanyData(
+        state.selectedFilters,
+        state.companyData
+      );
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getCompanyDataService.pending, (state) => {
@@ -27,4 +40,6 @@ const companiesDataSlice = createSlice({
   },
 });
 
+export const { setSelectedFilters, setFilteredCompanies } =
+  companiesDataSlice.actions;
 export default companiesDataSlice.reducer;

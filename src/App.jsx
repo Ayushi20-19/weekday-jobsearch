@@ -2,20 +2,20 @@ import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 import JobFilter from "./components/JobFilter/JobFilter";
 import JobCard from "./components/JobCard/JobCard";
-import { createFilteredData } from "./utils/utils";
+import { createFilteredData, filterCompanyData } from "./utils/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { getCompanyDataService } from "./redux/services/company";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { setFilteredCompanies } from "./redux/slices/companiesDataSlice";
 
 // Remote/on-site default options
 const remoteOptions = ["Remote", "On-site", "Hybrid"];
 
 function App() {
-  const [selectedValues, setSelectedValues] = useState([]);
   const [offset, setOffset] = useState(10);
   const dispatch = useDispatch();
-  const { companyData, totalCount } = useSelector((state) => state.company);
-
+  const { companyData, totalCount, selectedFilters, filteredCompanies } =
+    useSelector((state) => state.company);
   //added useMemo to reduce createFilter calculation
   const filterData = useMemo(
     () => [
@@ -53,19 +53,21 @@ function App() {
     ],
     [companyData]
   );
+  useEffect(() => {
+    dispatch(setFilteredCompanies());
+  }, [selectedFilters]);
 
   useEffect(() => {
     dispatch(getCompanyDataService({ offset }));
   }, [dispatch, offset]);
 
+  const companiesData =
+    selectedFilters.length > 0 ? filteredCompanies : companyData;
+
   return (
     <>
       <div style={{ padding: "2rem" }}>
-        <JobFilter
-          filterData={filterData}
-          selectedValues={selectedValues}
-          setSelectedValues={setSelectedValues}
-        />
+        <JobFilter filterData={filterData} />
       </div>
       <div
         style={{
@@ -90,7 +92,7 @@ function App() {
               gap: "20px",
             }}
           >
-            {companyData.map((val) => (
+            {companiesData.map((val) => (
               <JobCard key={val.jdUid} data={val} />
             ))}
           </div>
