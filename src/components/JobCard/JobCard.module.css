@@ -1,0 +1,140 @@
+.cardMainWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 360px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 4px 0px;
+  border-radius: 20px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.cardContentWrapper {
+  width: 93%;
+  flex: 1 1 0%;
+  padding: 8px 16px;
+}
+
+.postInfo {
+  display: flex;
+  align-items: flex-start;
+  padding-bottom: 10px;
+  flex-wrap: wrap;
+  width: 98%;
+  font-size: 10px;
+}
+
+.postDate {
+  padding: 4px 6px;
+  box-shadow: rgba(6, 6, 6, 0.05) 0px 2px 6px 0px;
+  border-radius: 10px;
+  border: 1px solid rgb(230, 230, 230);
+}
+.postDate p {
+  margin: 0px;
+}
+
+.companyInfo {
+  display: flex;
+  gap: 0.5rem;
+}
+.companyInfo img {
+  width: 40px;
+  height: 3em;
+}
+.infoContainer > h3 {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+  margin-top: 0;
+  color: rgb(139, 139, 139);
+}
+.infoContainer > h2 {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+.cardsSubText {
+  margin-bottom: 0px;
+  font-size: 11px;
+  font-weight: 500;
+  margin-top: 5px;
+}
+.cardSalary {
+  font-size: 14px ;
+  font-weight: 400;
+  margin: 8px 0 ;
+}
+.aboutCompany {
+  height: 240px;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    rgb(255, 255, 255),
+    rgb(255, 255, 255),
+    rgba(255, 255, 255, 0)
+  );
+}
+.aboutCompany p {
+  margin: 0;
+  font-weight: 600;
+}
+.aboutCompany p:nth-child(2) {
+  font-weight: 700;
+}
+
+.viewJob {
+  text-align: center;
+  margin-bottom: 0.5rem;
+  position: relative;
+  top: -20px;
+  color: rgb(0, 0, 255);
+}
+
+.minExperience {
+  margin-top: 10px;
+}
+.minExperience > h3 {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+  color: rgb(139, 139, 139);
+}
+.minExperience > h2 {
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 400;
+  margin: 0;
+}
+.statusContainer {
+  flex-grow: 1;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+.customBtn {
+  width: 100%;
+  background-color: rgb(85, 239, 196);
+  color: rgb(0, 0, 0);
+  font-weight: 500;
+  padding: 8px 18px;
+  text-transform: none;
+  border-radius: 8px;
+  margin: 5px 0;
+  border: 0;
+  cursor: pointer;
+}
+.statusContainer > div:nth-child(2) button {
+  background-color: rgb(0, 0, 255);
+  color: rgb(255, 255, 255);
+}
+.statusButtonContainer {
+  justify-content: space-between;
+  display: flex;
+  width: 100%;
+}
