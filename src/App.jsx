@@ -24,7 +24,12 @@ function App() {
     filteredCompanies,
   } = useSelector((state) => state.company);
 
-  //added useMemo to reduce createFilter calculation
+  /**
+   * Memoized filter data to optimize performance by reducing the calculation of createFilter function.
+   *
+   * @param {Array} companyData - The data used for filtering.
+   * @returns {Array} An array of objects containing filter options for different criteria.
+   */
   const filterData = useMemo(
     () => [
       {
@@ -61,16 +66,42 @@ function App() {
     ],
     [companyData]
   );
+
+  /**
+   * useEffect hook to dispatch an action to set filtered companies whenever selected filters change.
+   *
+   * @param {Array} selectedFilters - The array of selected filters.
+   */
   useEffect(() => {
     dispatch(setFilteredCompanies());
   }, [selectedFilters]);
 
+  /**
+   * useEffect hook to dispatch an action to fetch company data when the offset changes.
+   *
+   * @param {function} dispatch - The dispatch function provided by Redux.
+   * @param {number} offset - The offset used for pagination.
+   */
   useEffect(() => {
     dispatch(getCompanyDataService({ offset }));
   }, [dispatch, offset]);
 
+  /**
+   * Determines the data to be used based on selected filters.
+   *
+   * If there are selected filters, returns filtered companies; otherwise, returns all company data.
+   *
+   * @param {Array} selectedFilters - The array of selected filters.
+   * @param {Array} filteredCompanies - The array of filtered companies.
+   * @param {Array} companyData - The array of all company data.
+   * @returns {Array} The array of companies data to be used.
+   */
   const companiesData =
     selectedFilters.length > 0 ? filteredCompanies : companyData;
+
+  /**
+   * Scrolls the window to the top with smooth behavior.
+   */
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
