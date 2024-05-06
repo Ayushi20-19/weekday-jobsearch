@@ -31,6 +31,7 @@
 - Made Filter Data dynamic based on companies data.
 - Implemented infinite scroll to load more job listings as the user scrolls down the page.
 - Ensured responsive design across different screen sizes, including mobile devices.
+- Added Scroll to top button for Smooth UX.
 - Hosted on Vercel.
 
 
@@ -102,7 +103,7 @@ The project has the following structure:
 
 ## UI 
 
-<img width="1315" alt="Screenshot 2024-05-06 at 10 31 28 PM" src="https://github.com/Ayushi20-19/weekday-jobsearch/assets/50084909/a25b6823-a2ab-44c3-bc06-76109aeb1ff1">
+<img width="1397" alt="Screenshot 2024-05-06 at 11 06 59 PM" src="https://github.com/Ayushi20-19/weekday-jobsearch/assets/50084909/cd73da5c-2f3b-4bae-ae8e-1cf272735202">
 
 ### with filters
 
