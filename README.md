@@ -31,6 +31,7 @@
 - Made Filter Data dynamic based on companies data.
 - Implemented infinite scroll to load more job listings as the user scrolls down the page.
 - Ensured responsive design across different screen sizes, including mobile devices.
+- Added Scroll to top button for Smooth UX.
 - Hosted on Vercel.
 
 
