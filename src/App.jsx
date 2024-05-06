@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCompanyDataService } from "./redux/services/company";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { setFilteredCompanies } from "./redux/slices/companiesDataSlice";
-import { Box, LinearProgress } from "@mui/material";
+import { Box, IconButton, LinearProgress } from "@mui/material";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
 // Remote/on-site default options
 const remoteOptions = ["Remote", "On-site", "Hybrid"];
@@ -70,15 +71,22 @@ function App() {
 
   const companiesData =
     selectedFilters.length > 0 ? filteredCompanies : companyData;
-  
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <>
+      <IconButton className="scrollToTopButton" onClick={scrollToTop}>
+        <ArrowUpwardIcon />
+      </IconButton>
       <div className="jobFilterConatiner">
         <JobFilter filterData={filterData} />
       </div>
-      <div
-       className="infinteScrollContainer"
-      >
+      <div className="infinteScrollContainer">
         <InfiniteScroll
           dataLength={companiesData.length}
           next={() => setOffset((prev) => prev + 10)}
@@ -98,11 +106,9 @@ function App() {
             status === "pending" ? "Loading" : <p>No more data to load.</p>
           }
         >
-          <div
-           className="jobCardContainer"
-          >
+          <div className="jobCardContainer">
             {companiesData.map((val, index) => (
-              <JobCard key={`${val.jdUid}-${index}`}data={val} />
+              <JobCard key={`${val.jdUid}-${index}`} data={val} />
             ))}
           </div>
         </InfiniteScroll>
