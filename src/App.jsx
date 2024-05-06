@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCompanyDataService } from "./redux/services/company";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { setFilteredCompanies } from "./redux/slices/companiesDataSlice";
+import { Box, LinearProgress } from "@mui/material";
 
 // Remote/on-site default options
 const remoteOptions = ["Remote", "On-site", "Hybrid"];
@@ -14,8 +15,14 @@ const remoteOptions = ["Remote", "On-site", "Hybrid"];
 function App() {
   const [offset, setOffset] = useState(10);
   const dispatch = useDispatch();
-  const { companyData, totalCount, selectedFilters, filteredCompanies } =
-    useSelector((state) => state.company);
+  const {
+    status,
+    companyData,
+    totalCount,
+    selectedFilters,
+    filteredCompanies,
+  } = useSelector((state) => state.company);
+
   //added useMemo to reduce createFilter calculation
   const filterData = useMemo(
     () => [
@@ -63,37 +70,39 @@ function App() {
 
   const companiesData =
     selectedFilters.length > 0 ? filteredCompanies : companyData;
-
+  
   return (
     <>
-      <div style={{ padding: "2rem" }}>
+      <div className="jobFilterConatiner">
         <JobFilter filterData={filterData} />
       </div>
       <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          flexWrap: "wrap",
-          gap: "20px",
-        }}
+       className="infinteScrollContainer"
       >
         <InfiniteScroll
-          dataLength={companyData.length}
+          dataLength={companiesData.length}
           next={() => setOffset((prev) => prev + 10)}
-          hasMore={companyData.length < totalCount}
-          loader={<p>Loading...</p>}
-          endMessage={<p>No more data to load.</p>}
+          hasMore={companiesData.length < totalCount}
+          loader={
+            companiesData.length === 0 ? (
+              <p>No data found for the selected filter.</p>
+            ) : (
+              <Box
+                sx={{ width: "100%", marginTop: "20px", marginBottom: "20px" }}
+              >
+                <LinearProgress />
+              </Box>
+            )
+          }
+          endMessage={
+            status === "pending" ? "Loading" : <p>No more data to load.</p>
+          }
         >
           <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              gap: "20px",
-            }}
+           className="jobCardContainer"
           >
-            {companiesData.map((val) => (
-              <JobCard key={val.jdUid} data={val} />
+            {companiesData.map((val, index) => (
+              <JobCard key={`${val.jdUid}-${index}`}data={val} />
             ))}
           </div>
         </InfiniteScroll>
